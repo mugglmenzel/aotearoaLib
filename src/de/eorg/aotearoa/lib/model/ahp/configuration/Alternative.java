@@ -10,15 +10,15 @@ import java.io.Serializable;
  *         Author: Michael Menzel (mugglmenzel)
  * 
  *         Last Change:
- *           
- *           By Author: $Author: mugglmenzel@gmail.com $ 
- *         
- *           Revision: $Revision: 220 $ 
- *         
- *           Date: $Date: 2011-09-16 18:58:00 +0200 (Fr, 16 Sep 2011) $
+ * 
+ *         By Author: $Author: mugglmenzel@gmail.com $
+ * 
+ *         Revision: $Revision: 220 $
+ * 
+ *         Date: $Date: 2011-09-16 18:58:00 +0200 (Fr, 16 Sep 2011) $
  * 
  *         License:
- *         
+ * 
  *         Copyright 2011 Forschungszentrum Informatik FZI / Karlsruhe Institute
  *         of Technology
  * 
@@ -34,13 +34,15 @@ import java.io.Serializable;
  *         implied. See the License for the specific language governing
  *         permissions and limitations under the License.
  * 
- *         
- *         SVN URL: 
- *         $HeadURL: https://aotearoadecisions.googlecode.com/svn/trunk/src/main/java/de/fzi/aotearoa/shared/model/ahp/configuration/Alternative.java $
- *         
+ * 
+ *         SVN URL: $HeadURL:
+ *         https://aotearoadecisions.googlecode.com/svn/trunk/
+ *         src/main/java/de/fzi
+ *         /aotearoa/shared/model/ahp/configuration/Alternative.java $
+ * 
  */
 
-public abstract class Alternative implements Cloneable, Serializable {
+public class Alternative implements Cloneable, Serializable {
 
 	/**
 	 * 
@@ -48,24 +50,25 @@ public abstract class Alternative implements Cloneable, Serializable {
 	private static final long serialVersionUID = 3016699896490202374L;
 
 	/**
-	 * @uml.property  name="name"
+	 * @uml.property name="name"
 	 */
 	private String name;
 
 	/**
-	 * @uml.property  name="description"
+	 * @uml.property name="description"
 	 */
 	private String description;
 
 	/**
-	 * @uml.property  name="decision"
-	 * @uml.associationEnd  inverse="alternatives:de.eorg.cumulusgenius.shared.cloudmapping.model.ahp.configuration.Decision"
+	 * @uml.property name="decision"
+	 * @uml.associationEnd inverse=
+	 *                     "alternatives:de.eorg.cumulusgenius.shared.cloudmapping.model.ahp.configuration.Decision"
 	 */
 	private Decision decision;
 
 	/**
 	 * @return
-	 * @uml.property  name="name"
+	 * @uml.property name="name"
 	 */
 	public String getName() {
 		return name;
@@ -73,7 +76,7 @@ public abstract class Alternative implements Cloneable, Serializable {
 
 	/**
 	 * @param name
-	 * @uml.property  name="name"
+	 * @uml.property name="name"
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -81,7 +84,7 @@ public abstract class Alternative implements Cloneable, Serializable {
 
 	/**
 	 * @return
-	 * @uml.property  name="decision"
+	 * @uml.property name="decision"
 	 */
 	public Decision getDecision() {
 		return decision;
@@ -89,7 +92,7 @@ public abstract class Alternative implements Cloneable, Serializable {
 
 	/**
 	 * @param decision
-	 * @uml.property  name="decision"
+	 * @uml.property name="decision"
 	 */
 	public void setDecision(Decision decision) {
 		this.decision = decision;
@@ -116,7 +119,7 @@ public abstract class Alternative implements Cloneable, Serializable {
 
 	/**
 	 * @param description
-	 * @uml.property  name="description"
+	 * @uml.property name="description"
 	 */
 	public void setDescription(String description) {
 		this.description = description;
@@ -124,16 +127,21 @@ public abstract class Alternative implements Cloneable, Serializable {
 
 	/**
 	 * @return
-	 * @uml.property  name="description"
+	 * @uml.property name="description"
 	 */
 	public String getDescription() {
 		return description;
 	}
 
-	
-	public abstract Alternative clone();
+	public Alternative clone() {
+		Alternative alt = new Alternative(getName());
+		alt.setDescription(getDescription());
+		return alt;
+	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -146,7 +154,9 @@ public abstract class Alternative implements Cloneable, Serializable {
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -171,6 +181,4 @@ public abstract class Alternative implements Cloneable, Serializable {
 		return true;
 	}
 
-	
-	
 }
