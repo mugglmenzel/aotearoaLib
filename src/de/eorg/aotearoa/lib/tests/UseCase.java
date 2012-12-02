@@ -1,11 +1,7 @@
 package de.eorg.aotearoa.lib.tests;
 
 /**
- * 
- */
-
-/**
- * @author jonasprior
+ * @author mugglmenzel
  *
  */
 
