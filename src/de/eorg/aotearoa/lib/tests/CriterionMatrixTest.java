@@ -1,6 +1,8 @@
 package de.eorg.aotearoa.lib.tests;
 import java.util.List;
 
+import org.junit.Test;
+
 import de.eorg.aotearoa.lib.model.ahp.configuration.Alternative;
 import de.eorg.aotearoa.lib.model.ahp.configuration.Criterion;
 import de.eorg.aotearoa.lib.model.ahp.configuration.Decision;
@@ -8,7 +10,7 @@ import de.eorg.aotearoa.lib.model.ahp.configuration.Goal;
 
 public class CriterionMatrixTest {
 
-	//@Test
+	@Test
 	public void testAddMatrixWeights() {
 
 		Decision decision = new Decision();

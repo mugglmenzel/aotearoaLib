@@ -2,8 +2,10 @@ package de.eorg.aotearoa.lib.model.ahp.configuration;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import de.eorg.aotearoa.lib.model.ahp.values.GoalImportance;
@@ -53,7 +55,7 @@ public class Decision<T extends Alternative> implements Serializable, Cloneable 
 	/**
 	 * 
 	 */
-	
+
 	private static final long serialVersionUID = 4411517735777225339L;
 
 	private static Logger log = Logger.getLogger(Decision.class.getName());
@@ -92,7 +94,7 @@ public class Decision<T extends Alternative> implements Serializable, Cloneable 
 	 * @uml.associationEnd multiplicity="(0 -1)" inverse=
 	 *                     "decision:de.eorg.cumulusgenius.shared.cloudmapping.model.ahp.values.GoalImportance"
 	 */
-	protected List<GoalImportance> importanceGoals = new ArrayList<GoalImportance>();
+	protected Map<GoalType, List<GoalImportance>> importanceGoals = new HashMap<GoalType, List<GoalImportance>>();
 
 	public Decision() {
 		super();
@@ -102,8 +104,8 @@ public class Decision<T extends Alternative> implements Serializable, Cloneable 
 		super();
 		this.name = decisionName;
 	}
-	public Decision(String userId, String name, String description)
-	{
+
+	public Decision(String userId, String name, String description) {
 		super();
 		this.userId = userId;
 		this.name = name;
@@ -306,7 +308,7 @@ public class Decision<T extends Alternative> implements Serializable, Cloneable 
 	@Override
 	public String toString() {
 		return getName() + ", " + getAlternatives() + ", " + getGoals() + ", "
-				+ getImportanceGoals();
+				+ getImportanceGoalsMap();
 	}
 
 	/*
@@ -314,7 +316,11 @@ public class Decision<T extends Alternative> implements Serializable, Cloneable 
 	 * 
 	 * @see java.lang.Object#clone()
 	 */
-	
+
+	private Map<GoalType, List<GoalImportance>> getImportanceGoalsMap() {
+		return this.importanceGoals;
+	}
+
 	public Decision<T> clone() {
 		Decision<T> dec = new Decision<T>(getName());
 		dec.setDescription(getDescription());
@@ -331,40 +337,43 @@ public class Decision<T extends Alternative> implements Serializable, Cloneable 
 	/**
 	 * @return the importanceGoals
 	 */
-	public List<GoalImportance> getImportanceGoals() {
-		return importanceGoals;
+	public List<GoalImportance> getImportanceGoals(GoalType gt) {
+		if (importanceGoals.get(gt) == null)
+			importanceGoals.put(gt, new ArrayList<GoalImportance>());
+		return importanceGoals.get(gt);
 	}
 
 	/**
 	 * @param importanceGoals
 	 *            the importanceGoals to set
 	 */
-	public void setImportanceGoals(List<GoalImportance> importanceGoals) {
-		this.importanceGoals = importanceGoals;
+	public void setImportanceGoals(GoalType gt,
+			List<GoalImportance> importanceGoals) {
+		this.importanceGoals.put(gt, importanceGoals);
 	}
 
-	public GoalImportance getImportanceGoal(int i, int j) {
-		log.fine("goal importance set: " + getImportanceGoals());
+	public GoalImportance getImportanceGoal(GoalType gt, int i, int j) {
+		log.fine("goal importance set: " + getImportanceGoals(gt));
 		GoalImportance test = new GoalImportance(i, j, 1D, null);
 		test.setDecision(this);
-		if (!getImportanceGoals().contains(test))
+		if (!getImportanceGoals(gt).contains(test))
 			return null;
-		for (GoalImportance gi : getImportanceGoals())
+		for (GoalImportance gi : getImportanceGoals(gt))
 			if (test.equals(gi))
 				return gi;
 		return null;
 	}
 
-	public void insertImportanceGoal(GoalImportance gi) {
-		if (getImportanceGoals().contains(gi)) {
-			for (GoalImportance goali : getImportanceGoals())
+	public void insertImportanceGoal(GoalType gt, GoalImportance gi) {
+		if (getImportanceGoals(gt).contains(gi)) {
+			for (GoalImportance goali : getImportanceGoals(gt))
 				if (goali.equals(gi)) {
 					goali.setComparisonAToB(gi.getComparisonAToB());
 					goali.setComment(gi.getComment());
 				}
 
 		} else
-			getImportanceGoals().add(gi);
+			getImportanceGoals(gt).add(gi);
 	}
 
 	/*

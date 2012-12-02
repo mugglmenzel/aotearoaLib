@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Test;
+
 import de.eorg.aotearoa.lib.jama.Matrix;
 import de.eorg.aotearoa.lib.logic.ahp.AnalyticHierarchyProcess;
 import de.eorg.aotearoa.lib.model.ahp.configuration.Alternative;
@@ -15,23 +17,23 @@ import de.eorg.aotearoa.lib.model.ahp.values.EvaluationResult;
 
 public class AnalyticHierachyProcessTest {
 
-	
+	@Test
 	public void testEvaluate(Matrix criteriaMatrix) {
 
 		Decision decision = new Decision();
 		Goal goal = new Goal();
-		goal.setName("autokauf");
+		goal.setName("buy car");
 		Criterion c1 = new Criterion();
-		c1.setName("styling");
+		c1.setName("style");
 		Criterion c2 = new Criterion();
-		c2.setName("verlaesslichkeit");
+		c2.setName("reliability");
 		Criterion c3 = new Criterion();
-		c3.setName("sparsamkeit");
+		c3.setName("efficiency");
 
-		Alternative a1 = new Alternative("golf");
-		Alternative a2 = new Alternative("206");
-		Alternative a3 = new Alternative("saxo");
-		Alternative a4 = new Alternative("clio");
+		Alternative a1 = new Alternative("VW Golf");
+		Alternative a2 = new Alternative("BMW 1");
+		Alternative a3 = new Alternative("Mercedes-Benz A");
+		Alternative a4 = new Alternative("Porsche 911");
 
 
 		goal.addChild(c1);

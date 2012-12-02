@@ -290,7 +290,7 @@ public class AnalyticHierarchyProcess {
 		for (GoalType gt : GoalType.values()) {
 			// GoalWeights
 			GoalWeightsMatrix critM = new GoalWeightsMatrix(decision.getGoals(
-					gt).size(), decision.getImportanceGoals());
+					gt).size(), decision.getImportanceGoals(gt));
 			Vector<Double> goalsWeights = saaty ? calculateEigenvectorSaaty(
 					critM.getMatrix(), precision) : calculateEigenvector(
 					critM.getMatrix(), precision);
@@ -431,7 +431,8 @@ public class AnalyticHierarchyProcess {
 				// m.print(2, 2);
 				//
 				if (v != null
-						&& v.size() == getDecision().getAlternatives().size()) {
+						&& v.size() == getDecision().getAlternatives().size()
+						&& i < leafCriteria.size()) {
 
 					if (alternativePos > -1) {
 						Set<AlternativeEvaluation> altEvals = getAlternativeEvaluations()
@@ -448,9 +449,12 @@ public class AnalyticHierarchyProcess {
 							Set<AlternativeEvaluation> altEvals = getAlternativeEvaluations()
 									.get(goal);
 							synchronized (altEvals) {
+								System.out.println("adding eval criterion " + i
+										+ ", alternative " + j + " with value " + v);
 								altEvals.add(createAlternativeEvaluation(
 										getDecision().getAlternatives().get(j),
 										j, leafCriteria.get(i), v));
+
 							}
 						}
 				}
@@ -633,6 +637,28 @@ public class AnalyticHierarchyProcess {
 		}
 	}
 
+	public void setGoalWeights(Matrix m) {
+		this.setGoalWeights(m, DEFAULT_PRECISION);
+	}
+
+	public void setGoalWeights(Matrix m, int precision) {
+		Vector<Double> goalWeights = calculateEigenvector(m, precision);
+
+		if (goalWeights.size() > 0
+				&& goalWeights.size() >= getDecision().getGoals().size()) {
+			Iterator<Goal> itiGoal = getDecision().getGoals().iterator();
+			int i = 0;
+			while (itiGoal.hasNext()) {
+				Goal goal = itiGoal.next();
+				goal.setWeight(goalWeights.get(i));
+				log.info(goal.getName() + ": local weight = "
+						+ goal.getWeight() + ", global weight = "
+						+ goal.getGlobalWeight());
+				i++;
+			}
+		}
+	}
+
 	private Vector<Double> calculateEigenvector(Matrix m, int precision) {
 
 		// System.out.print("m: " );
@@ -673,8 +699,8 @@ public class AnalyticHierarchyProcess {
 		 * Abweichungen // beim Eigenvektor auftreten (maximal 100 mal) for (int
 		 * a = 0; a < 100; a++) {
 		 * 
-		 * // Quadratur der Matrix m = m.times(m); // System.out.print("m??: " );
-		 * // m.print(3, 2);
+		 * // Quadratur der Matrix m = m.times(m); // System.out.print("m??: "
+		 * ); // m.print(3, 2);
 		 * 
 		 * // Variablen zur Berechnung des Eigenvektors int columnDimension =
 		 * m.getColumnDimension(); int rowDimension = m.getRowDimension();
