@@ -1,7 +1,7 @@
 aotearoaLib
 ===========
 
-A library for programmatic decision-making and an implementation of the Analytic Hierarchy Process (AHP).
+A java library for programmatic decision-making and an implementation of the Analytic Hierarchy Process (AHP).
 
 aotearoaLib provides a library to apply the Multi Criteria Comparison Method for Cloud Computing (MC^2)^2 framework. 
 A model allows to define decisions that can be settled with one of multiple alternatives. 
