@@ -1,13 +1,14 @@
 package de.eorg.aotearoa.lib.model.ahp.configuration;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 import de.eorg.aotearoa.lib.model.ahp.values.AlternativeImportance;
 import de.eorg.aotearoa.lib.model.ahp.values.AlternativeValue;
 import de.eorg.aotearoa.lib.model.ahp.values.CriterionImportance;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * 
@@ -132,6 +133,12 @@ public class Criterion implements Serializable {
 		super();
 		this.name = name;
 	}
+
+
+    public Criterion(String name, CriterionType type) {
+        this(name);
+        this.type = type;
+    }
 
 	public void addChild(Criterion c) {
 		getChildren().add(c);

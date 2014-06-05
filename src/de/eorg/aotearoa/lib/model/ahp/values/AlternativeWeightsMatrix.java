@@ -1,12 +1,14 @@
 package de.eorg.aotearoa.lib.model.ahp.values;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 import de.eorg.aotearoa.lib.jama.Matrix;
 import de.eorg.aotearoa.lib.model.ahp.configuration.Criterion;
+
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * 
@@ -63,7 +65,7 @@ public class AlternativeWeightsMatrix implements Serializable {
 	/**
 	 * @uml.property  name="values"
 	 */
-	private final List<AlternativeImportance> values = new ArrayList<AlternativeImportance>();
+	private final Set<AlternativeImportance> values = new HashSet<AlternativeImportance>();
 
 	/**
 	 * @uml.property  name="matrix"
@@ -77,9 +79,6 @@ public class AlternativeWeightsMatrix implements Serializable {
 	 */
 	private final HashMap<Double, Double> comparison = new HashMap<Double, Double>();
 
-	/**
-	 * @param criteriaOrder
-	 */
 	public AlternativeWeightsMatrix(int alternatives,
 			List<AlternativeImportance> weights, Criterion c) {
 		super();
@@ -111,7 +110,6 @@ public class AlternativeWeightsMatrix implements Serializable {
 		if (!(values.size() >= numberOfAlternatives * (numberOfAlternatives - 1) / 2))
 			for (int i = 0; i < numberOfAlternatives - 1; i++)
 				for (int j = i + 1; j < numberOfAlternatives; j++)
-					if (!values.contains(new AlternativeImportance(i, j, c, 0D, null)))
 						values.add(new AlternativeImportance(i, j, c, 0D, null));
 		
 		matrix = Matrix.identity(numberOfAlternatives, numberOfAlternatives);
